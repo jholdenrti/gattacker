@@ -7,7 +7,7 @@ var WebSocket = require('ws');
 var async = require('async');
 var util = require('util');
 var colors = require('colors');
-var noble = require('./lib/noble');
+var noble = require('@abandonware/noble');
 var utils = require('./lib/utils');
 
 var port = 0xB1e;

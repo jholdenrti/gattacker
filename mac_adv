@@ -6,7 +6,7 @@ BDADDR=helpers/bdaddr/bdaddr
 
 . ./config.env
 
-HCIDEV="hci$BLENO_HCI_DEVICE_ID"
+HCIDEV="hci0"
 
 if [ $# -lt 2 ]; then
 	echo "Usage: sudo $0 -a <advertisement_file> [ -s <services_file> ] "
