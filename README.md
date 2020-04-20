@@ -3,23 +3,32 @@
 
 A Node.js package for BLE (Bluetooth Low Energy) Man-in-the-Middle & more.
 
-
-## Prerequisites
-
-see:
-
-https://github.com/sandeepmistry/noble
-
-https://github.com/sandeepmistry/bleno
+This repo has been patched to compile on Linux with NodeJS v10 as most of the dependencies were abandonware and failed ot compile.
+(Works on RaspPi 3 and 4 as well as many others.)
 
 
 ## Install
 
 ```sh
-npm install gattacker
+#Add Nodejs 10 to apt sources
+curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
+#Install Nodejs v10
+sudo apt install nodejs -y
+#Install Dependencies
+sudo apt-get install bluetooth bluez libbluetooth-dev libudev-dev build-essential -y
+#Install Node-gyp globally
+sudo npm install -g node-gyp
+#Clone this repo
+git clone https://github.com/xen0bit/gattacker.git
+#Enter Directory
+cd gattacker
+#Install this toolkit
+npm install
 ```
 
 ## Usage
+
+
 
 ### Configure 
 
@@ -33,6 +42,7 @@ If you run "central" and "peripheral" modules on separate boxes with just one BT
 
 * WS_SLAVE : IP address of ws-slave box
 * DEVICES_PATH : path to store json files 
+
 
 ### Start "central" device 
 
@@ -56,6 +66,10 @@ DEBUG=ws-slave sudo node ws-slave
 node scan
 ```
 Without parameters scans for broadcasted advertisements, and records them as json files (.adv.json) in DEVICES_PATH 
+
+### Known Bugs
+
+Scan may hang on first run. Hit CTRL+C and run again.
 
 
 #### Explore services and characteristics
@@ -115,8 +129,12 @@ staticValue - static value
 
 ### Start "peripheral" device 
 
+### Known Bugs
+
+From a fresh start, a scan must be started and killed twice in order for advertise to work.
+
 ```sh
-node advertise -a <advertisement_json_file> [ -s <services_json_file> ]
+sudo node advertise -a <advertisement_json_file> [ -s <services_json_file> ]
 ```
 
 It connects via websocket to ws-slave in order to forward requests to original device.
